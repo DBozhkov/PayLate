@@ -32,16 +32,11 @@ export const Navbar = () => {
               <NavLink className='nav-link' to='/home'> Home</NavLink>
             </li>
             <li className='nav-item'>
-              <NavLink className='nav-link' to='/search'> Search Books</NavLink>
+              <NavLink className='nav-link' to='/search'> Search Products</NavLink>
             </li>
             {authState.isAuthenticated &&
-              <li className="nav-item">
-                <NavLink className='nav-link' to='/shelf'>Shelf</NavLink>
-              </li>
-            }
-                        {authState.isAuthenticated &&
               <li className='nav-item'>
-                <NavLink className='nav-link' to='/fees'>Pay fees</NavLink>
+                <NavLink className='nav-link' to='/cart'>Cart</NavLink>
               </li>
             }
             {

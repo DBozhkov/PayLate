@@ -8,6 +8,9 @@ import { LoginCallback, Security } from '@okta/okta-react';
 import { oktaConfig } from './lib/oktaConfig';
 import LoginWidget from './Auth/LoginWidget';
 import { AboutUs } from './Info/AboutUs';
+import { Partners } from './Info/Partners';
+import { ProductList } from './Products/components/ProductsList';
+import { ProductDetails } from './Products/components/ProductDetails';
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -28,18 +31,22 @@ export const App = () => {
   return (
     <div className='d-flex flex-column min-vh-100'>
       <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri} onAuthRequired={customAuthHandler}>
-      <Navbar />
-      <div className='flex-grow-1'>
-        <Routes>
-          <Route path='/' element={<Navigate to='/home' />} />
-          <Route path='/home' element={<HomePage />} />
-          <Route path='/about' element={<AboutUs />} />
-          <Route path='/login' element={<LoginWidget config={oktaConfig} />} />
-          <Route path='/login/callback' Component={LoginCallback} />
-        </Routes>
-      </div>
-      <Footer />
-    </Security>
+        <Navbar />
+        <div className='flex-grow-1'>
+          <Routes>
+            <Route path='/' element={<Navigate to='/home' />} />
+            <Route path='/home' element={<HomePage />} />
+            <Route path='/about' element={<AboutUs />} />
+            <Route path='/partners' element={<Partners />} />
+            <Route path='/products' element={<ProductList />} />
+            <Route path='/products/:partner' element={<ProductList />} />
+            <Route path='/products/:partner/:productId' element={<ProductDetails />} />
+            <Route path='/login' element={<LoginWidget config={oktaConfig} />} />
+            <Route path='/login/callback' element={<LoginCallback />} />
+          </Routes>
+        </div>
+        <Footer />
+      </Security>
     </div>
   );
 }

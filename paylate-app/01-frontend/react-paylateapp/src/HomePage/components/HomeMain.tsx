@@ -1,7 +1,7 @@
 import { useOktaAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 
-export const Heros = () => {
+export const HomeMain = () => {
 
     const { authState } = useOktaAuth();
     return (
@@ -24,7 +24,7 @@ export const Heros = () => {
                                 services to be able to buy the desired products for you and deliver them to your doorstep.
                             </p>
                             {authState?.isAuthenticated ? 
-                                <Link type="button" className="btn main-color btn-lg text-white" to='partners'>
+                                <Link type="button" className="btn main-color btn-lg text-white" to='/partners'>
                                     Check our partners! 
                                 </Link> 
                                 : 
@@ -66,7 +66,7 @@ export const Heros = () => {
                 </div>
             </div>
 
-            {/* Mobile Heros */}
+            {/* Mobile HomeMain */}
             <div className='d-lg-none'>
                 <div className='container'>
                     <div className='m-2'>

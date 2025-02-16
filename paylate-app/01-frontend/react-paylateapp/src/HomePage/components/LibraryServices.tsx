@@ -10,16 +10,16 @@ export const LibraryServices = () => {
             <div className='row p-4 align-items-center border shadow-lg'>
                 <div className='col-lg-7 p-3'>
                     <h1 className='display-4 fw-bold'>
-                        Can't find what you are looking for?
+                        You like us?
                     </h1>
                     <p className='lead'>
-                        If you cannot find what you are looking for,
-                        send our library admin's a personal message!
+                        Support our cause and mission and we will
+                        give half of what you donate to a random charity!
                     </p>
                     <div className='d-grid gap-2 justify-content-md-start mb-4 mb-lg-3'>
                         {authState?.isAuthenticated ?
-                            <Link to='/messages' type="button" className="btn main-color btn-lg px-4 me-md-2 fw-bold text-white">
-                                Library Services
+                            <Link to='/donate' type="button" className="btn btn-warning btn-lg px-4 me-md-2 fw-bold text-dark">
+                                Donate
                             </Link>
                             :
                             <Link className='btn main-color btn-lg text-white' to='/login'>

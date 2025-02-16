@@ -5,7 +5,7 @@
 // import ProductModel from "../../models/ProductModel";
 // import { ReturnProduct } from "./ReturnProduct";
 
-// export const Carousel = () => {
+export const Carousel = () => {
 
 //     const[products, setProducts] = useState<ProductModel[]>([]);
 //     const[isLoading, setIsLoading] = useState(true);
@@ -130,4 +130,4 @@
 //             </div>
 //         </div>
 //     );
-// }
+}
