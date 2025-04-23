@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 export const SingleProduct: React.FC<{ product: ProductModel, partner?: string }> = (props) => {
     const productLink = props.partner ? `/products/${props.partner}/${props.product.id}` : `/products/${props.product.id}`;
 
+    console.log('Partner:', props.partner);
+    console.log(productLink);
+
     return (
         <div className="col-12 col-md-6 col-lg-4 mb-4">
             <div className="card h-100 shadow-sm">

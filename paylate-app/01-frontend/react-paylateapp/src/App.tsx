@@ -11,6 +11,12 @@ import { AboutUs } from './Info/AboutUs';
 import { Partners } from './Info/Partners';
 import { ProductList } from './Products/components/ProductsList';
 import { ProductDetails } from './Products/components/ProductDetails';
+import { Cart } from './Cart/Cart';
+import { PaymentPage } from './PaymentPage/PaymentPage';
+import { CheckoutPage } from './CheckoutReview/CheckoutPage';
+import { PreviousOrders } from './Orders/PreviousOrders';
+import { ManageProductsPage } from './layouts/ManageProducts/ManageProductsPage';
+import ProfilePage from './Profile/components/ProfilePage';
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -38,11 +44,18 @@ export const App = () => {
             <Route path='/home' element={<HomePage />} />
             <Route path='/about' element={<AboutUs />} />
             <Route path='/partners' element={<Partners />} />
-            <Route path='/products' element={<ProductList />} />
             <Route path='/products/:partner' element={<ProductList />} />
             <Route path='/products/:partner/:productId' element={<ProductDetails />} />
+            <Route path='/products/:productId' element={<ProductDetails />} />
+            <Route path='/products' element={<ProductList />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/checkout' element={<CheckoutPage />} />
             <Route path='/login' element={<LoginWidget config={oktaConfig} />} />
             <Route path='/login/callback' element={<LoginCallback />} />
+            <Route path='/payment' element={<PaymentPage />} />
+            <Route path='/orderHistory' element={<PreviousOrders />} />
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/admin' element={<ManageProductsPage />} />
           </Routes>
         </div>
         <Footer />

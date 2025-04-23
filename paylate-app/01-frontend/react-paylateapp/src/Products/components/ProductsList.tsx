@@ -14,23 +14,32 @@ export const ProductList: React.FC = () => {
     const [productsPerPage] = useState(6);
     const [totalProducts, setTotalProducts] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const endpoint = partner
-                    ? `http://localhost:8080/api/${partner}Products?page=${currentPage - 1}&size=${productsPerPage}`
-                    : `http://localhost:8080/api/products?page=${currentPage - 1}&size=${productsPerPage}`;
+                const baseEndpoint = partner
+                    ? `${process.env.REACT_APP_API}/${partner}Products`
+                    : `${process.env.REACT_APP_API}/products`;
+    
+                const endpoint = search
+                    ? `${baseEndpoint}/search/findByProductNameContaining?productName=${search}&page=${currentPage - 1}&size=${productsPerPage}`
+                    : `${baseEndpoint}?page=${currentPage - 1}&size=${productsPerPage}`;
+    
                 const response = await fetch(endpoint);
                 if (!response.ok) {
-                    throw new Error('Something went wrong!');
+                    throw new Error("Failed to fetch products from the API.");
                 }
+    
                 const responseData = await response.json();
-
-                const loadedProducts = responseData._embedded ? responseData._embedded[`${partner}Products`] : responseData;
-
+                const loadedProducts = responseData._embedded
+                    ? (partner ? responseData._embedded[`${partner}Products`] : responseData._embedded.products)
+                    : [];
+    
                 const productList = loadedProducts.map((product: any) => {
-                    const id = product._links.self.href.split('/').pop();
+                    const id = product._links.self.href.split("/").pop(); 
+                    console.log(id);
                     return new ProductModel(
                         id,
                         product.price,
@@ -42,24 +51,27 @@ export const ProductList: React.FC = () => {
                         product.imgUrl,
                         product.authorUrl,
                         product.rating
-                    )
+                    );
                 });
-                console.log(productList);
+    
                 setProducts(productList);
-                setTotalProducts(responseData.page.totalElements);
-                setTotalPages(responseData.page.totalPages);
+                setTotalProducts(responseData.page?.totalElements || 0);
+                setTotalPages(responseData.page?.totalPages || 0);
                 setIsLoading(false);
             } catch (error: any) {
+                console.error("Error fetching products:", error.message);
                 setIsLoading(false);
                 setHttpError(error.message);
             }
         };
-
+    
         fetchProducts();
-    }, [currentPage, productsPerPage]);
+    }, [partner, currentPage, search]);
 
-    const paginate = (pageNumber: number) => {
-        setCurrentPage(pageNumber);
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    const handleSearch = () => {
+        setCurrentPage(1);
     };
 
     if (isLoading) {
@@ -77,12 +89,23 @@ export const ProductList: React.FC = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                <div className="col-12 text-center">
-                    <h1 className="display-5 fw-bold mb-4">Products</h1>
+                <div className="col-10">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search products by name..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
+                <div className="col-2">
+                    <button className="btn btn-primary w-100" onClick={handleSearch}>
+                        Search
+                    </button>
                 </div>
             </div>
-            <div className="row">
-                {products.map(product => (
+            <div className="row mt-4">
+                {products.map((product) => (
                     <SingleProduct
                         key={product.id}
                         product={product}

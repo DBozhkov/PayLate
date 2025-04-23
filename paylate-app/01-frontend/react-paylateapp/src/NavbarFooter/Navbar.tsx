@@ -1,19 +1,15 @@
+import { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
-// import { useOktaAuth } from "@okta/okta-react";
-import { Spinner } from "../../src/Utils/Spinner";
 import { useOktaAuth } from "@okta/okta-react";
+import { Spinner } from "../Utils/Spinner";
+import { ProfileMenu } from "../Profile/ProfileMenu";
 
-export const Navbar = () => {
-
-  const { oktaAuth, authState } = useOktaAuth();
+export const Navbar: FC = () => {
+  const { authState } = useOktaAuth();
 
   if (!authState) {
-    return <Spinner />
+    return <Spinner />;
   }
-
-  const handleLogout = async () => oktaAuth.signOut();
-
-  console.log(authState);
 
   return (
     <nav className='navbar navbar-expand-lg navbar-dark main-color py-3'>
@@ -32,7 +28,7 @@ export const Navbar = () => {
               <NavLink className='nav-link' to='/home'> Home</NavLink>
             </li>
             <li className='nav-item'>
-              <NavLink className='nav-link' to='/search'> Search Products</NavLink>
+              <NavLink className='nav-link' to='/partners'> Our Partners</NavLink>
             </li>
             {authState.isAuthenticated &&
               <li className='nav-item'>
@@ -52,14 +48,16 @@ export const Navbar = () => {
                 <Link type='button' className='btn btn-outline-light' to='/login'>Sign in</Link>
               </li>
               :
-              <li>
-                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+              <li className='nav-item dropdown'>
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Profile
+                </a>
+                <ProfileMenu />
               </li>
             }
-
           </ul>
         </div>
       </div>
     </nav>
   );
-}
+};

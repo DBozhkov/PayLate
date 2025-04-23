@@ -15,7 +15,7 @@ export const ReturnProduct: React.FC<{ product: ProductModel }> = (props) => {
                 />
                     :
                     <img
-                        src={require('./../../../src/Images/BooksImages/book-luv2code-1000.png')}
+                        src={require('./../../Images/ProductImages/box.jpg')}
                         width='151'
                         height='233'
                         alt="product"
