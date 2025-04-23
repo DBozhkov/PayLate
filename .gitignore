@@ -23,3 +23,6 @@ dist/
 
 # Ensure src directory is not ignored
 !/src/
+
+# Ignore application.properties file
+application.properties
